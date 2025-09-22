@@ -18,7 +18,7 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        echo 'Deploying application..."
+        echo 'Deploying application...'
         // Example command
           sh ' sudo systemctl restart httpd'
       }
