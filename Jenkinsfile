@@ -21,7 +21,7 @@ pipeline {
             steps {
                 echo 'Deploying application...'
                 // Example: copy to Apache/Nginx root
-                sh 'cp -r * /var/www/html/'
+                sh 'sudo cp -r * /var/www/html/'
             }
         }
     }
