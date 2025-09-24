@@ -1,35 +1,28 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Source Code Management Checkout')
-      steps {
-         // Clone your repository
-         git branch: 'master'
-            url: 'https://github.com/muahmed471/simple_php_application.git'
-      }
-    }
-    
-    stage('Compile') {
-      steps {
-          sh 'sudo yum install httpd php php-mysql php-fpm -y'
-      }
-    }
+    stages {
+        stage('Source Code Management Checkout') {
+            steps {
+                git branch: 'master',
+                    url: 'https://github.com/muahmed471/simple_php_application.git'
+            }
+        }
 
-    stage('Deploy') {
-      steps {
-        echo 'Deploying application...'
-        // Example command
-          sh ' sudo systemctl restart httpd'
-      }
-    }
+        stage('Compile') {
+            steps {
+                echo 'Compiling the application...'
+                // For PHP you might not really "compile", but run a syntax check
+                sh 'php -l index.php'
+            }
+        }
 
-    post {
-      success {
-        echo 'Pipeline completed successfully'
-      }
-      failure {
-        echo 'Pipeline failed'
-      }
-  }
-}          
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                // Example: copy to Apache/Nginx root
+                sh 'cp -r * /var/www/html/'
+            }
+        }
+    }
+}
